@@ -28,11 +28,11 @@ def getAllEndpoints(jwt, id, data_region):
 
 def main(id, secret):
     auth_response = auth(id, secret)
-    jwt_token = auth_response.json()['access_token']
+    jwt_token = auth_response['access_token']
 
     tenant_response = getTenant(jwt_token)
-    tenant_id = tenant_response.json()['id']
-    data_region = tenant_response.json()['apiHosts']['dataRegion']
+    tenant_id = tenant_response['id']
+    data_region = tenant_response['apiHosts']['dataRegion']
 
     endpoints = getAllEndpoints(jwt_token, tenant_id, data_region)
 
