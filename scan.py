@@ -35,5 +35,8 @@ def main(id, secret):
 
     endpoints = getAllEndpoints(jwt_token, tenant_id, data_region)
 
+    for endpoint in endpoints:
+        requests.post('{}/endpoint/v1/endpoints/{}/scans'.format(data_region, endpoint['id']))
+
 if __name__ == '__main__':
     main()
