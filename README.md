@@ -6,5 +6,6 @@ Not tested yet.
 
 TODO:
 - [x] Add commandline arguments
+- [ ] Test at client
 - [ ] Catch unsuccesful responses and give error code in case
 - [ ] Structure Code
