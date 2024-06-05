@@ -5,6 +5,6 @@ Get Client ID and Secret ID using Sophos Central [Getting started calling Sophos
 Not tested yet.
 
 TODO:
-- [ ] Add commandline parameter
+- [x] Add commandline arguments
 - [ ] Catch unsuccesful responses and give error code in case
 - [ ] Structure Code

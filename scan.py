@@ -1,4 +1,5 @@
 import requests
+import argparse
 
 def auth(id, secret):
     payload = {'grant_type':'client_credentials', 'client_id':id, 'client_secret':secret, 'scope':'token'}
@@ -39,4 +40,8 @@ def main(id, secret):
         requests.post('{}/endpoint/v1/endpoints/{}/scans'.format(data_region, endpoint['id']))
 
 if __name__ == '__main__':
-    main()
+    parser = argparse.ArgumentParser(prog='Sophos Tenant Endpoint Scanner', description='Trigger scan on all endpoints of a Sophos tenant', epilog='For help on generating Client ID & Client Secret visit https://developer.sophos.com/getting-started-tenant')
+    parser.add_argument('-cid', '--clientid', required=True, help='Your Sophos Client ID')
+    parser.add_argument('-cs', '--clientsecret', required=True, help='Your Sophos Client Secret')
+    args = parser.parse_args()
+    main(args.clientid, args.clientsecret)
