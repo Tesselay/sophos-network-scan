@@ -16,14 +16,24 @@ def getTenant(jwt):
 def getAllEndpoints(jwt, id, data_region):
     headers = {'Authorization: Bearer {}'.format(jwt), 'X-Tenant-ID: {}'.format(id)}
 
-    response = requests.get('{}/endpoint/v1/endpoints'.format(data_region))
-    return response
+    response = requests.get('{}/endpoint/v1/endpoints'.format(data_region), headers=headers)
+    endpoints = response['items']
+    while response['nextKey'] != '':
+        payload = {'pageFromKey': response['nextKey']}
+        response = requests.get('{}/endpoint/v1/endpoints'.format(data_region), headers=headers, params=payload)
+        endpoints.append(response['items'])
+
+    return endpoints
 
 def main(id, secret):
     auth_response = auth(id, secret)
-    tenant_response = getTenant(auth_response['access_token'])
+    jwt_token = auth_response['access_token']
 
+    tenant_response = getTenant(jwt_token)
+    tenant_id = tenant_response['id']
     data_region = tenant_response['apiHosts']['dataRegion']
+
+    endpoints = getAllEndpoints(jwt_token, tenant_id, data_region)
 
 if __name__ == '__main__':
     main()
